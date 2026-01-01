@@ -26,16 +26,10 @@ func NewLLMClient(grpcURL string) *LLMClient {
 	}
 }
 
-// ---------------------------
-// Helper: request context
-// ---------------------------
 func (c *LLMClient) ctx() (context.Context, context.CancelFunc) {
 	return context.WithTimeout(context.Background(), 5*time.Second)
 }
 
-// ---------------------------
-// 1. Generate First Question
-// ---------------------------
 func (c *LLMClient) GenerateFirstQuestion(state *pb.SessionState) (string, error) {
 	ctx, cancel := c.ctx()
 	defer cancel()
@@ -49,9 +43,6 @@ func (c *LLMClient) GenerateFirstQuestion(state *pb.SessionState) (string, error
 	return resp.Question, nil
 }
 
-// ---------------------------
-// 2. Generate Next Question
-// ---------------------------
 func (c *LLMClient) GenerateNextQuestion(state *pb.SessionState) (string, error) {
 	ctx, cancel := c.ctx()
 	defer cancel()
@@ -64,9 +55,6 @@ func (c *LLMClient) GenerateNextQuestion(state *pb.SessionState) (string, error)
 	return resp.Question, nil
 }
 
-// ---------------------------
-// 3. Generate Final Guess
-// ---------------------------
 func (c *LLMClient) GenerateFinalGuess(state *pb.SessionState) (*pb.LLMGuessResponse, error) {
 	ctx, cancel := c.ctx()
 	defer cancel()
